@@ -12,6 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-fn main() {
-    risc0_build::embed_methods();
+use risc0_groth16::{Fr, Seal, Verifier, VerifyingKey};
+use risc0_zkvm::{guest::env, sha::Digestible};
+
+pub fn main() {
+    let (seal, public_inputs, verifying_key): (Seal, Vec<Fr>, VerifyingKey) = env::read();
+
+    Verifier::new(&seal, &public_inputs, &verifying_key)
+        .unwrap()
+        .verify()
+        .unwrap();
+
+    env::commit(&(verifying_key.digest(), public_inputs.digest()));
 }

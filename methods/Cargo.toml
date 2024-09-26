@@ -1,10 +1,10 @@
 [package]
-name = "methods"
+name = "groth16-verifier-methods"
 version = "0.1.0"
 edition = "2021"
 
 [build-dependencies]
-risc0-build = { version = "1.1.1" }
+risc0-build = { path = "../../../risc0/build" }
 
 [package.metadata.risc0]
 methods = ["guest"]
